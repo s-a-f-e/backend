@@ -30,5 +30,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api-token-auth/', views.obtain_auth_token),
-    path('', TemplateView.as_view(template_name="home.html")),
+    path('', TemplateView.as_view(template_name="index.html")),
 ]
