@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 class Person(models.Model):
     # id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     name = models.CharField(max_length=50, blank=False)
-    phone = models.CharField(max_length=20, blank=False)
+    phone = models.CharField(max_length=20, blank=False, unique=True)
     # phone = PhoneNumberField(null=False, blank=False, unique=True)
     # phone = PhoneNumber.from_string(phone_number=raw_phone, region='RU').as_e164
 
