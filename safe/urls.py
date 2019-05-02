@@ -19,8 +19,8 @@ from django.urls import path, include
 from rest_framework import routers
 from people.api import DriverViewSet, MotherViewSet
 
-# from rest_framework.authtoken import views
-# from django.views.generic import TemplateView
+from rest_framework.authtoken import views
+from django.views.generic import TemplateView
 
 router = routers.DefaultRouter()
 router.register('drivers', DriverViewSet)
@@ -29,4 +29,6 @@ router.register('mothers', MotherViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api-token-auth/', views.obtain_auth_token),
+    path('', TemplateView.as_view(template_name="home.html")),
 ]
