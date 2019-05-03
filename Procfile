@@ -1,0 +1,1 @@
+web: gunicorn safe.wsgi
