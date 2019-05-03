@@ -17,18 +17,7 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_HEADERS = [
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-disposition',
-    'content-type',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-]
+
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
@@ -70,6 +59,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-disposition',
+    'content-type',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
 ]
 
 ROOT_URLCONF = 'safe.urls'
