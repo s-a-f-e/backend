@@ -26,18 +26,18 @@ This site allows a woman to text a service and a trained driver will come to tak
 | Method | Endpoint     | Description                                                                                                                                                                                                             |
 | ------ | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | POST   | /api/drivers | Creates a `driver` user using the information sent inside the `body` of the request. The body should include `name` (str), `phone` (str), `homebase` (str), `latitude` (float), `longitude` (float), `available` (bool) |
-| GET    | /api/drivers | Shows all drivers.                                                                                                                                                                                                      |
+| GET    | /api/drivers | Shows all drivers. Returns an array [{"id":"...", "name":"...", "phone":"...", "latitude":"...", "longitude":"...", "available":"bool"}, {...}]                                                                         |
 
 ### Mothers
 
 | Method | Endpoint     | Description                                                                                                                                                                                        |
 | ------ | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | POST   | /api/mothers | Creates a `mother` user using the information sent inside the `body` of the request. The body should include `name` (str), `phone` (str), `village` (str), `latitude` (float), `longitude` (float) |
-| GET    | /api/mothers | Shows all mothers.                                                                                                                                                                                 |
+| GET    | /api/mothers | Shows all mothers. Returns an array [{"id":"...", "name":"...", "phone":"...", "village":"...", "latitude":"...", "longitude":"..."}, {...}]                                                       |
 
 ### Villages
 
-| Method | Endpoint        | Description                                                                                             |
-| ------ | --------------- | ------------------------------------------------------------------------------------------------------- |
-| GET    | /api/villages   | Shows all villages.                                                                                     |
-| GET    | /api/village/id | Returns the village specified by id. JSON object {"name": "...", "latitude": "...", "longitude": "..."} |
+| Method | Endpoint        | Description                                                                                                 |
+| ------ | --------------- | ----------------------------------------------------------------------------------------------------------- |
+| GET    | /api/villages   | Shows all villages. Returns an array [{"id":".","name":"...","latitude":"...","longitude":"..."}, {...}]    |
+| GET    | /api/village/id | Returns the village specified by id as a JSON object {"name": "...", "latitude": "...", "longitude": "..."} |
