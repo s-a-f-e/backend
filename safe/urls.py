@@ -17,18 +17,21 @@ from django.contrib import admin
 from django.urls import path, include
 
 from rest_framework import routers
-from people.api import DriverViewSet, MotherViewSet
+from people.api import DriverViewSet, MotherViewSet, VillagesViewSet
 
 from rest_framework.authtoken import views
 from django.views.generic import TemplateView
+from . import view
 
 router = routers.DefaultRouter()
 router.register('drivers', DriverViewSet)
 router.register('mothers', MotherViewSet)
+router.register('villages', VillagesViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api-token-auth/', views.obtain_auth_token),
+    path('api/village/<int:id>/', view.village),
     path('', TemplateView.as_view(template_name="index.html")),
 ]

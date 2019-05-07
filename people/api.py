@@ -1,14 +1,13 @@
 from rest_framework import serializers  # for which fields
 from rest_framework import viewsets  # for which rows
-from .models import Driver, Mother
+from .models import Driver, Mother, Village
 
 
 # get our model and fields
 class DriverSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Driver
-        fields = ('name', 'phone', 'homebase',
-                  'latitude', 'longitude', 'available')
+        fields = ('id', 'name', 'phone', 'latitude', 'longitude', 'available')
 
 
 class DriverViewSet(viewsets.ModelViewSet):
@@ -16,10 +15,13 @@ class DriverViewSet(viewsets.ModelViewSet):
     queryset = Driver.objects.none()
 
     def get_queryset(self):
+        """
+        This view returns a list of all the drivers registered
+        """
         user = self.request.user
 
-        if user.is_anonymous:
-            return Driver.objects.none()  # is none, but of PersonalNote `type`
+        if user.is_anonymous:  # that is, not logged in
+            return Driver.objects.none()
         else:
             return Driver.objects.all()
 
@@ -27,17 +29,42 @@ class DriverViewSet(viewsets.ModelViewSet):
 class MotherSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Mother
-        fields = ('name', 'phone', 'village', 'latitude', 'longitude')
+        fields = ('id', 'name', 'phone', 'village', 'latitude', 'longitude')
 
 
 class MotherViewSet(viewsets.ModelViewSet):
     serializer_class = MotherSerializer
-    queryset = Driver.objects.none()
+    queryset = Mother.objects.none()
 
     def get_queryset(self):
+        """
+        This view returns a list of all the mothers registered
+        """
         user = self.request.user
 
-        if user.is_anonymous:
-            return Mother.objects.none()  # is none, but of PersonalNote `type`
+        if user.is_anonymous:  # that is, not logged in
+            return Mother.objects.none()
         else:
             return Mother.objects.all()
+
+
+class VillageSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Village
+        fields = ('id', 'name', 'latitude', 'longitude')
+
+
+class VillagesViewSet(viewsets.ModelViewSet):
+    serializer_class = VillageSerializer
+    queryset = Village.objects.none()
+
+    def get_queryset(self):
+        """
+        This view returns a list of all the villages entered
+        """
+        user = self.request.user
+
+        if user.is_anonymous:  # that is, not logged in
+            return Village.objects.none()
+        else:
+            return Village.objects.all()
