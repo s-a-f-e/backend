@@ -34,3 +34,10 @@ This site allows a woman to text a service and a trained driver will come to tak
 | ------ | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | POST   | /api/mothers | Creates a `mother` user using the information sent inside the `body` of the request. The body should include `name` (str), `phone` (str), `village` (str), `latitude` (float), `longitude` (float) |
 | GET    | /api/mothers | Shows all mothers.                                                                                                                                                                                 |
+
+### Villages
+
+| Method | Endpoint        | Description                                                                                             |
+| ------ | --------------- | ------------------------------------------------------------------------------------------------------- |
+| GET    | /api/villages   | Shows all villages.                                                                                     |
+| GET    | /api/village/id | Returns the village specified by id. JSON object {"name": "...", "latitude": "...", "longitude": "..."} |
