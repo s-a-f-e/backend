@@ -96,18 +96,18 @@ WSGI_APPLICATION = 'safe.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASS'),
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
-# DATABASE_URL = 'postgresql:///postgresql'
-# DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('DB_NAME'),
+#         'USER': config('DB_USER'),
+#         'PASSWORD': config('DB_PASS'),
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
+DATABASE_URL = 'postgresql:///postgresql'
+DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 
 
 # Password validation
