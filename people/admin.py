@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Driver, Mother
+from .models import Driver, Mother, Village
 
 
 class PersonAdmin(admin.ModelAdmin):
@@ -7,5 +7,6 @@ class PersonAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(Mother)
-admin.site.register(Driver)
+admin.site.register(Mother, PersonAdmin)
+admin.site.register(Driver, PersonAdmin)
+admin.site.register(Village)

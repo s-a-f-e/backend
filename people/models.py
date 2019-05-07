@@ -23,9 +23,14 @@ class Person(models.Model):
 
 
 class Driver(Person):
-    homebase = models.CharField(max_length=100, blank=False)
     available = models.BooleanField()
 
 
 class Mother(Person):
     village = models.CharField(max_length=50, blank=False)
+
+
+class Village(models.Model):
+    name = models.CharField(max_length=50, blank=False)
+    longitude = models.FloatField()
+    latitude = models.FloatField()
