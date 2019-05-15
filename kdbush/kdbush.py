@@ -1,4 +1,3 @@
-import math
 from kdRange import kdRange
 from kdSort import kdSort
 from kdWithin import kdWithin
@@ -16,7 +15,6 @@ class KDBush:
             ids[i] = i
             coords[2 * i] = points[i][0]
             coords[2 * i + 1] = points[i][1]
-
         kdSort(ids, coords, nodeSize, 0, len(ids) - 1, 0)
 
     def range(self, minX, minY, maxX, maxY):
