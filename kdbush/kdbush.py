@@ -1,7 +1,7 @@
 import math
-from kbRange import kbRange
-from kbSort import kbSort
-from kbWithin import kbWithin
+from kdRange import kdRange
+from kdSort import kdSort
+from kdWithin import kdWithin
 
 
 class KDBush:
@@ -17,10 +17,10 @@ class KDBush:
             coords[2 * i] = points[i][0]
             coords[2 * i + 1] = points[i][1]
 
-        kbSort(ids, coords, nodeSize, 0, len(ids) - 1, 0)
+        kdSort(ids, coords, nodeSize, 0, len(ids) - 1, 0)
 
     def range(self, minX, minY, maxX, maxY):
-        return kbRange(self.ids, self.coords, minX, minY, maxX, maxY, self.nodeSize)
+        return kdRange(self.ids, self.coords, minX, minY, maxX, maxY, self.nodeSize)
 
     def within(self, x, y, r):
-        return kbWithin(self.ids, self.coords, x, y, r, self.nodeSize)
+        return kdWithin(self.ids, self.coords, x, y, r, self.nodeSize)

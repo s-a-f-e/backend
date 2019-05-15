@@ -1,4 +1,4 @@
-def kbSort(ids, coords, nodeSize, left, right, axis):
+def kdSort(ids, coords, nodeSize, left, right, axis):
     if (right - left <= nodeSize):
         return
 
@@ -9,8 +9,8 @@ def kbSort(ids, coords, nodeSize, left, right, axis):
     select(ids, coords, m, left, right, axis)
 
     # recursively kd-sort first half and second half on the opposite axis
-    kbSort(ids, coords, nodeSize, left, m - 1, 1 - axis)
-    kbSort(ids, coords, nodeSize, m + 1, right, 1 - axis)
+    kdSort(ids, coords, nodeSize, left, m - 1, 1 - axis)
+    kdSort(ids, coords, nodeSize, m + 1, right, 1 - axis)
 
 
 def select(ids, coords, k, left, right, axis):

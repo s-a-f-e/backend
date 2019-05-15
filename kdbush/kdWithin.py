@@ -1,5 +1,5 @@
 
-def kbWithin(ids, coords, qx, qy, r, nodeSize):
+def kdWithin(ids, coords, qx, qy, r, nodeSize):
     stack = [0, len(ids) - 1, 0]
     result = []
     r2 = r * r

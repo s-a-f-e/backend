@@ -1,4 +1,4 @@
-def kbRange(ids, coords, minX, minY, maxX, maxY, nodeSize):
+def kdRange(ids, coords, minX, minY, maxX, maxY, nodeSize):
     stack = [0, len(ids) - 1, 0]
     result = []
 
