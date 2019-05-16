@@ -3,7 +3,6 @@ import json
 # read file
 f = open("./cities.json", "r")
 # parse file
-print("F", f)
 cities = json.load(f)
 
 print("# of cities", len(cities))
