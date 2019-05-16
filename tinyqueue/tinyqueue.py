@@ -1,5 +1,9 @@
 def defaultCompare(a, b):
-    return a < b if - 1 else a > b if 1 else 0
+    if a < b:
+        return -1
+    if a > b:
+        return 1
+    return 0
 
 
 class TinyQueue:
@@ -9,8 +13,11 @@ class TinyQueue:
         self.compare = compare
 
         if (self.length > 0):
-            for i in range(self.length >> 1) - 1, -1, -1:
+            for i in range((self.length >> 1) - 1, -1, -1):
                 self._down(i)
+
+    def length(self):
+        return self.length
 
     def push(self, item):
         self.data.append(item)
@@ -67,6 +74,6 @@ class TinyQueue:
                 break
 
             data[pos] = best
-            post = left
+            pos = left
 
         data[pos] = item
