@@ -26,16 +26,16 @@ def select(ids, coords, k, left, right, axis):
             s = 0.5 * math.exp(2 * z / 3)
             sd = 0.5 * math.sqrt(z * s * (n - s) / n) * \
                 (m - n / 2 < 0 if - 1 else 1)
-            newLeft = math.max(left, math.floor(k - m * s / n + sd))
-            newRight = math.min(right, math.floor(k + (n - m) * s / n + sd))
+            newLeft = max(left, math.floor(k - m * s / n + sd))
+            newRight = min(right, math.floor(k + (n - m) * s / n + sd))
             select(ids, coords, k, newLeft, newRight, axis)
 
         t = coords[2 * k + axis]
-        i = left
-        j = right
+        i = int(left)
+        j = int(right)
 
         swapItem(ids, coords, left, k)
-        if (coords[2 * right + axis] > t):
+        if (coords[2 * int(right) + int(axis)] > t):
             swapItem(ids, coords, left, right)
 
         while (i < j):
@@ -47,7 +47,7 @@ def select(ids, coords, k, left, right, axis):
             while (coords[2 * j + axis] > t):
                 j -= 1
 
-        if (coords[2 * left + axis] == t):
+        if (coords[2 * int(left) + int(axis)] == t):
             swapItem(ids, coords, left, j)
         else:
             j += 1
@@ -60,12 +60,16 @@ def select(ids, coords, k, left, right, axis):
 
 
 def swapItem(ids, coords, i, j):
+    i = int(i)
+    j = int(j)
     swap(ids, i, j)
     swap(coords, 2 * i, 2 * j)
     swap(coords, 2 * i + 1, 2 * j + 1)
 
 
 def swap(arr, i, j):
+    i = int(i)
+    j = int(j)
     tmp = arr[i]
     arr[i] = arr[j]
     arr[j] = tmp

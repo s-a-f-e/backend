@@ -13,8 +13,8 @@ class KDBush:
 
         for i in range(0, len(points)):
             ids[i] = i
-            coords[2 * i] = points[i][0]
-            coords[2 * i + 1] = points[i][1]
+            coords[2 * i] = points[i]["lat"]
+            coords[2 * i + 1] = points[i]["lon"]
         kdSort(ids, coords, nodeSize, 0, len(ids) - 1, 0)
 
     def range(self, minX, minY, maxX, maxY):
