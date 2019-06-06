@@ -24,8 +24,17 @@ def mother(request, id):
             'latitude': v_obj.latitude,
             'longitude': v_obj.longitude,
         }
-        # drivers =  Driver.objects.values()
-        # for d in drivers:
+        mom_lat = v_obj.latitude
+        mom_long = v_obj.longitude
+        drivers =  Driver.objects.values()
+        driversLocList = []
+        for d in drivers:
+            driversLocList.append({
+                "name":d["name"],
+                "lat":d["latitude"],
+                "lon":d["longitude"]
+            })
+        print("driversLocList", driversLocList)
 
     except Mother.DoesNotExist:
         raise Http404("Mother does not exist")
