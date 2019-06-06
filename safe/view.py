@@ -1,5 +1,7 @@
 from people.models import Village, Mother, Driver
 from django.http import JsonResponse, Http404
+from kdBush.kdbush import KDBush
+from .geokdbush.geokdbush import around, distance
 
 def village(request, id):
     try:
@@ -12,7 +14,6 @@ def village(request, id):
     except Village.DoesNotExist:
         raise Http404("Village does not exist")
     return JsonResponse(data)
-
 
 def mother(request, id):
     try:
@@ -35,7 +36,10 @@ def mother(request, id):
                 "lon":d["longitude"]
             })
         print("driversLocList", driversLocList)
-
+        index = KDBush(driversLocList)
+        print("index", index)
+        points = around(index, mom_long, mom_lat)
+        print("POINTS", points)
     except Mother.DoesNotExist:
         raise Http404("Mother does not exist")
     return JsonResponse(data)

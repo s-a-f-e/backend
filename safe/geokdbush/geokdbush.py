@@ -1,6 +1,6 @@
 import random
 import math
-from tinyqueue import TinyQueue
+from .tinyqueue import TinyQueue
 
 earthRadius = 6371.
 rad = math.pi / 180.
