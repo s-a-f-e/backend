@@ -33,5 +33,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-token-auth/', views.obtain_auth_token),
     path('api/village/<int:id>/', view.village),
+    path('api/mother/<str:id>/', view.mother),
     path('', TemplateView.as_view(template_name="index.html")),
 ]
