@@ -163,7 +163,6 @@ def sqDist(ax, ay, bx, by):
 
 class KDBush:
     def __init__(self, points, nodeSize=64):
-        print("INITIALIZING!!!")
         self.nodeSize = nodeSize
         self.points = points
 
