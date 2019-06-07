@@ -56,5 +56,11 @@ def mother(request, id):
         }
 
     except Mother.DoesNotExist:
-        raise Http404("Mother does not exist")
+        msg = "No entry found for " + id
+        data = {
+            "msg": msg,
+            "message": "Please text 11 to register"
+        }
+        return JsonResponse(data)
+        # raise Http404("Mother does not exist")
     return JsonResponse(data)
