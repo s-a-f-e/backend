@@ -1,7 +1,10 @@
 from people.models import Village, Mother, Driver
 from django.http import JsonResponse, Http404
-# from kdBush.kdbush import KDBush
+from decouple import config
 from .geokdbush.geokdbush import around, distance
+import requests, json
+
+FRONTLINE_KEY = config('FRONTLINESMS_SECRET')
 
 def village(request, id):
     try:
@@ -63,4 +66,12 @@ def mother(request, id):
         }
         return JsonResponse(data)
         # raise Http404("Mother does not exist")
+
+
+
+    # ping the SMS server with closest driver
+    url = 'https://cloud.frontlinesms.com/api/1/webhook'
+    pickup_msg = "Please pick up " + data["name"] + " at " + data["village"] + " village.\nReply with 'yes' if you are going."
+    payload = {"apiKey":FRONTLINE_KEY, "payload":{"message":pickup_msg, "recipients":[{ "type":"mobile", "value":closestList[0][1] }]}}
+    r = requests.post(url, data=json.dumps(payload))
     return JsonResponse(data)
