@@ -83,7 +83,7 @@ def mother(request, id):
 
 
 def regMother(request, id):
-    parsed = id.split('&')
+    parsed = id.split('&', 1)
     # see if village send via SMS is in the database
     try:
         villages = Village.objects.values()
@@ -101,15 +101,14 @@ def regMother(request, id):
     }
 
     # enter this mom into database
-    # try:
-    query = Mother(name="entered via SMS", phone=parsed[0],
-                   village=village[0]["name"],
-                   latitude=village[0]["latitude"],
-                   longitude=village[0]["longitude"],)
-    query.save()
-    # m_obj = Mother.objects.create(momObject)
-    # print("Looks to have added mom", m_obj)
-    # except:
-    #     print("FAIL! adding mom to database")
+    try:
+        query = Mother(name="entered via SMS", phone=parsed[0],
+                       village=village[0]["name"],
+                       latitude=village[0]["latitude"],
+                       longitude=village[0]["longitude"],)
+        query.save()
+    except:
+        # ToDo: send a text to person monitoring the system
+        return JsonResponse({"msg": "Error adding new mom to db"})
 
     return JsonResponse(momObject)
