@@ -76,7 +76,8 @@ def mother(request, id):
     url = 'https://cloud.frontlinesms.com/api/1/webhook'
     pickup_msg = "Please pick up " + \
         data["name"] + " at " + data["village"] + \
-        " village.\nReply with 'yes' if you are going."
+        " village. Her number is " + \
+        data["phone"] + "\nReply with 'yes' if you are going."
     payload = {"apiKey": FRONTLINE_KEY, "payload": {"message": pickup_msg,
                                                     "recipients": [{"type": "mobile", "value": closestList[0][1]}]}}
     r = requests.post(url, data=json.dumps(payload))
@@ -94,7 +95,7 @@ def regMother(request, id):
         return JsonResponse({"msg": "village " + parsed[1] + " not found."})
 
     momObject = {
-        "name": "entered via SMS",
+        "name": "a mother",
         "phone": parsed[0],
         "village": village[0]["name"],
         "latitude": village[0]["latitude"],
