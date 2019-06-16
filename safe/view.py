@@ -6,6 +6,7 @@ import requests
 import json
 
 FRONTLINE_KEY = config('FRONTLINESMS_SECRET')
+MASTER_PHONE = config('MASTER_PHONE')
 
 
 def village(request, id):
@@ -111,4 +112,9 @@ def regMother(request, id):
         # ToDo: send a text to person monitoring the system
         return JsonResponse({"msg": "Error adding new mom to db"})
 
+    url = 'https://cloud.frontlinesms.com/api/1/webhook'
+    pickup_msg = "driver"
+    payload = {"apiKey": FRONTLINE_KEY, "payload": {"message": pickup_msg,
+                                                    "recipients": [{"type": "mobile", "value": MASTER_PHONE}]}}
+    r = requests.post(url, data=json.dumps(payload))
     return JsonResponse(momObject)
