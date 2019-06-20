@@ -94,13 +94,13 @@ def regMother(request, id):
     villages = Village.objects.values()
     listVillages = list(villages)
     print("VILLAGESVILLAGESVILLAGESVILLAGES", listVillages)
-    # try:
-    village = list(filter(lambda v: v["name"].lower() == momVillage.lower(), listVillages))
-    # print("FOUND VILLAGE" + village)
-    print("FOUND VILLAGE" + village[0]["name"])
-    # except:
-        # print("NOT FOUND VILLAGE")
-    return JsonResponse({"msg": "village " + momVillage + " not found."})
+    try:
+        village = list(
+            filter(lambda v: v["name"].lower() == momVillage.lower(), listVillages))
+        print("FOUND VILLAGE" + village[0]["name"])
+    except:
+        print("NOT FOUND VILLAGE")
+        return JsonResponse({"msg": "village " + momVillage + " not found."})
 
     momObject = {
         "name": "a mother",
