@@ -96,7 +96,7 @@ def regMother(request, id):
     print("VILLAGESVILLAGESVILLAGESVILLAGES", listVillages)
     # try:
     village = list(filter(lambda v: v["name"].lower() == momVillage.lower(), listVillages))
-    print("FOUND VILLAGE" + village)
+    # print("FOUND VILLAGE" + village)
     print("FOUND VILLAGE" + village[0]["name"])
     # except:
         # print("NOT FOUND VILLAGE")
