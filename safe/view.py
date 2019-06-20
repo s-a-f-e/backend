@@ -89,15 +89,12 @@ def regMother(request, id):
     parsed = id.split('&', 1)
     momPhone = parsed[0]
     momVillage = parsed[1]
-    print("MOMVILLAGEMOMVILLAGEMOMVILLAGE", momVillage)
     # see if village send via SMS is in the database
     villages = Village.objects.values()
     listVillages = list(villages)
-    print("VILLAGESVILLAGESVILLAGESVILLAGES", listVillages)
     try:
         village = list(
             filter(lambda v: v["name"].lower() == momVillage.lower(), listVillages))
-        print("FOUND VILLAGE" + village[0]["name"])
     except:
         print("NOT FOUND VILLAGE")
         return JsonResponse({"msg": "village " + momVillage + " not found."})
@@ -111,15 +108,16 @@ def regMother(request, id):
     }
 
     # enter this mom into database
-    try:
-        query = Mother(name="entered via SMS", phone=momPhone,
-                       village=village[0]["name"],
-                       latitude=village[0]["latitude"],
-                       longitude=village[0]["longitude"],)
-        query.save()
-    except:
-        # ToDo: send a text to person monitoring the system
-        return JsonResponse({"msg": "Error adding new mom to db"})
+    # try:
+    query = Mother(name="entered via SMS", phone=momPhone,
+                   village=village[0]["name"],
+                   latitude=village[0]["latitude"],
+                   longitude=village[0]["longitude"],)
+    query.save()
+    print("NEW MOM ADDDED TO DB")
+    # except:
+    # ToDo: send a text to person monitoring the system
+    return JsonResponse({"msg": "Error adding new mom to db"})
 
     url = 'https://cloud.frontlinesms.com/api/1/webhook'
     pickup_msg = "driver"
