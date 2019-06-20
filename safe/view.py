@@ -91,10 +91,11 @@ def regMother(request, id):
     momVillage = parsed[1]
     # see if village send via SMS is in the database
     villages = Village.objects.values()
-    print("VILLAGESVILLAGESVILLAGESVILLAGES", villages)
+    listVillages = list(villages)
+    print("VILLAGESVILLAGESVILLAGESVILLAGES", listVillages)
     try:
         village = list(
-            filter(lambda v: v["name"].lower() == momVillage.lower(), villages))
+            filter(lambda v: v["name"].lower() == momVillage.lower(), listVillages))
         print("FOUND VILLAGE" + village)
     except:
         print("NOT FOUND VILLAGE")
