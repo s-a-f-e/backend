@@ -4,6 +4,7 @@ from decouple import config
 from .geokdbush.geokdbush import around, distance
 import requests
 import json
+import time
 
 FRONTLINE_KEY = config('FRONTLINESMS_SECRET')
 MASTER_PHONE = config('MASTER_PHONE')
@@ -51,7 +52,7 @@ def mother(request, id):
             return item[2]
 
         closestList = sorted(driversList, key=getKey)
-        print("DONE", closestList)
+        # print("DONE", closestList)
 
         data = {
             'name': v_obj.name,
@@ -86,17 +87,19 @@ def mother(request, id):
 
 def regMother(request, id):
     parsed = id.split('&', 1)
+    momPhone = parsed[0]
+    momVillage = parsed[1]
     # see if village send via SMS is in the database
     try:
         villages = Village.objects.values()
         village = list(
-            filter(lambda v: v["name"].lower() == parsed[1].lower(), villages))
+            filter(lambda v: v["name"].lower() == momVillage.lower(), villages))
     except:
-        return JsonResponse({"msg": "village " + parsed[1] + " not found."})
+        return JsonResponse({"msg": "village " + momVillage + " not found."})
 
     momObject = {
         "name": "a mother",
-        "phone": parsed[0],
+        "phone": momPhone,
         "village": village[0]["name"],
         "latitude": village[0]["latitude"],
         "longitude": village[0]["longitude"],
@@ -104,7 +107,7 @@ def regMother(request, id):
 
     # enter this mom into database
     try:
-        query = Mother(name="entered via SMS", phone=parsed[0],
+        query = Mother(name="entered via SMS", phone=momPhone,
                        village=village[0]["name"],
                        latitude=village[0]["latitude"],
                        longitude=village[0]["longitude"],)
@@ -118,4 +121,12 @@ def regMother(request, id):
     payload = {"apiKey": FRONTLINE_KEY, "payload": {"message": pickup_msg,
                                                     "recipients": [{"type": "mobile", "value": MASTER_PHONE}]}}
     r = requests.post(url, data=json.dumps(payload))
+
+    time.sleep(10)
+    url = 'https://cloud.frontlinesms.com/api/1/webhook'
+    mom_msg = "You are registered. Please text 'driver' to request a pickup."
+    payload = {"apiKey": FRONTLINE_KEY, "payload": {"message": mom_msg,
+                                                    "recipients": [{"type": "mobile", "value": momPhone}]}}
+    r = requests.post(url, data=json.dumps(payload))
+
     return JsonResponse(momObject)
