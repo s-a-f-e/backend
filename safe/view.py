@@ -108,16 +108,15 @@ def regMother(request, id):
     }
 
     # enter this mom into database
-    # try:
-    query = Mother(name="entered via SMS", phone=momPhone,
-                   village=village[0]["name"],
-                   latitude=village[0]["latitude"],
-                   longitude=village[0]["longitude"],)
-    query.save()
-    print("NEW MOM ADDDED TO DB")
-    # except:
-    # ToDo: send a text to person monitoring the system
-    return JsonResponse({"msg": "Error adding new mom to db"})
+    try:
+        query = Mother(name="entered via SMS", phone=momPhone,
+                    village=village[0]["name"],
+                    latitude=village[0]["latitude"],
+                    longitude=village[0]["longitude"],)
+        query.save()
+    except:
+        # ToDo: send a text to person monitoring the system
+        return JsonResponse({"msg": "Error adding new mom to db"})
 
     url = 'https://cloud.frontlinesms.com/api/1/webhook'
     pickup_msg = "driver"
