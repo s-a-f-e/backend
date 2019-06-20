@@ -78,7 +78,7 @@ def mother(request, id):
     pickup_msg = "Please pick up " + \
         data["name"] + " at " + data["village"] + \
         " village. Her number is " + \
-        data["phone"] + "\nReply with 'yes' if you are going."
+        data["phone"] + "\nPlease text her to let her know you are on the way."
     payload = {"apiKey": FRONTLINE_KEY, "payload": {"message": pickup_msg,
                                                     "recipients": [{"type": "mobile", "value": closestList[0][1]}]}}
     r = requests.post(url, data=json.dumps(payload))
@@ -118,13 +118,6 @@ def regMother(request, id):
         # ToDo: send a text to person monitoring the system
         return JsonResponse({"msg": "Error adding new mom to db"})
 
-    # url = 'https://cloud.frontlinesms.com/api/1/webhook'
-    # pickup_msg = "driver"
-    # payload = {"apiKey": FRONTLINE_KEY, "payload": {"message": pickup_msg,
-    #                                                 "recipients": [{"type": "mobile", "value": MASTER_PHONE}]}}
-    # r = requests.post(url, data=json.dumps(payload))
-
-    # time.sleep(10)
     url = 'https://cloud.frontlinesms.com/api/1/webhook'
     mom_msg = "You are registered. Please text 'driver' to request a pickup."
     payload = {"apiKey": FRONTLINE_KEY, "payload": {"message": mom_msg,
