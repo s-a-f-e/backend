@@ -144,14 +144,6 @@
             ],
             "version": "==2019.1"
         },
-        "rapidsms": {
-            "hashes": [
-                "sha256:055b88afce3050335ca20ece8cec95d43856d4b33834787889149f8c559d3f4c",
-                "sha256:577400c97c47c3a8390f89e6610454f2e93d03e9c954524680f75fb7a47fa9e8"
-            ],
-            "index": "pypi",
-            "version": "==1.1.0"
-        },
         "requests": {
             "hashes": [
                 "sha256:502a824f31acdacb3a35b6690b5fbf0bc41d63a24a45c4004352b0242707598e",
