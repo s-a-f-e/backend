@@ -15,7 +15,6 @@ psycopg2-binary = "*"
 dj-database-url = "*"
 whitenoise = "*"
 django-cors-headers = "*"
-rapidsms = "*"
 
 [requires]
 python_version = "3.7"
