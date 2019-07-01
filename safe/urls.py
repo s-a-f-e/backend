@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from rest_framework import routers
-from people.api import DriverViewSet, MotherViewSet, VillagesViewSet
+from people.api import DriverViewSet, MotherViewSet, VillagesViewSet, HealthCentersViewSet
 
 from rest_framework.authtoken import views
 from django.views.generic import TemplateView
@@ -27,12 +27,14 @@ router = routers.DefaultRouter()
 router.register('drivers', DriverViewSet)
 router.register('mothers', MotherViewSet)
 router.register('villages', VillagesViewSet)
+router.register('healthcenters', HealthCentersViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api-token-auth/', views.obtain_auth_token),
     path('api/village/<int:id>/', view.village),
+    path('api/healthcenter/<int:id>/', view.healthcenter),
     path('api/mother/<str:id>/', view.mother),
     path('api/registermother/<str:id>/', view.regMother),
     path('', TemplateView.as_view(template_name="index.html")),
