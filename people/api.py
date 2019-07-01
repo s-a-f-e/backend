@@ -29,7 +29,8 @@ class DriverViewSet(viewsets.ModelViewSet):
 class MotherSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Mother
-        fields = ('id', 'name', 'phone', 'village', 'latitude', 'longitude')
+        fields = ('id', 'name', 'phone', 'village', 'hasComplications', 'dueMonth',
+                  'dueYear', 'latitude', 'longitude')
 
 
 class MotherViewSet(viewsets.ModelViewSet):
