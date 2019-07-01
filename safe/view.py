@@ -1,4 +1,4 @@
-from people.models import Village, Mother, Driver
+from people.models import Village, Mother, Driver, HealthCenter
 from django.http import JsonResponse, Http404
 from decouple import config
 from .geokdbush.geokdbush import around, distance
@@ -20,6 +20,19 @@ def village(request, id):
         }
     except Village.DoesNotExist:
         raise Http404("Village does not exist")
+    return JsonResponse(data)
+
+
+def healthcenter(request, id):
+    try:
+        v_obj = HealthCenter.objects.get(pk=id)
+        data = {
+            'name': v_obj.name,
+            'latitude': v_obj.latitude,
+            'longitude': v_obj.longitude,
+        }
+    except HealthCenter.DoesNotExist:
+        raise Http404("HealthCenter does not exist")
     return JsonResponse(data)
 
 

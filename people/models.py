@@ -34,3 +34,9 @@ class Village(models.Model):
     name = models.CharField(max_length=50, blank=False)
     longitude = models.FloatField()
     latitude = models.FloatField()
+
+
+class HealthCenter(models.Model):
+    name = models.CharField(max_length=50, blank=False)
+    longitude = models.FloatField()
+    latitude = models.FloatField()
