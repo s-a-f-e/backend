@@ -28,6 +28,9 @@ class Driver(Person):
 
 class Mother(Person):
     village = models.CharField(max_length=50, blank=False)
+    dueMonth = models.CharField(max_length=15, blank=True)
+    dueYear = models.CharField(max_length=5, blank=True)
+    hasComplications = models.BooleanField()
 
 
 class Village(models.Model):
