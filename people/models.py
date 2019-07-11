@@ -33,6 +33,10 @@ class Mother(Person):
     hasComplications = models.BooleanField()
 
 
+class Midwife(Person):
+    healthcenter = models.CharField(max_length=50, blank=False)
+
+
 class Village(models.Model):
     name = models.CharField(max_length=50, blank=False)
     longitude = models.FloatField()

@@ -1,6 +1,6 @@
 from rest_framework import serializers  # for which fields
 from rest_framework import viewsets  # for which rows
-from .models import Driver, Mother, Village, HealthCenter
+from .models import Driver, Mother, Village, Midwife, HealthCenter
 
 
 # get our model and fields
@@ -91,3 +91,26 @@ class HealthCentersViewSet(viewsets.ModelViewSet):
             return HealthCenter.objects.none()
         else:
             return HealthCenter.objects.all()
+
+
+class MidwifeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Midwife
+        fields = ('id', 'name', 'phone', 'healthcenter',
+                  'latitude', 'longitude')
+
+
+class MidwifeViewSet(viewsets.ModelViewSet):
+    serializer_class = MidwifeSerializer
+    queryset = Midwife.objects.none()
+
+    def get_queryset(self):
+        """
+        This view returns a list of all the HealthCenters entered
+        """
+        user = self.request.user
+
+        if user.is_anonymous:  # that is, not logged in
+            return Midwife.objects.none()
+        else:
+            return Midwife.objects.all()
