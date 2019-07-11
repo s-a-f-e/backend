@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Driver, Mother, Village, HealthCenter
+from .models import Driver, Mother, Village, HealthCenter, Midwife
 from django.http import HttpResponse
 import csv
 
@@ -30,5 +30,6 @@ class PersonAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Mother, PersonAdmin)
 admin.site.register(Driver, PersonAdmin)
+admin.site.register(Midwife, PersonAdmin)
 admin.site.register(Village)
 admin.site.register(HealthCenter)
