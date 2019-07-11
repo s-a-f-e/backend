@@ -96,7 +96,8 @@ class HealthCentersViewSet(viewsets.ModelViewSet):
 class MidwifeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Midwife
-        fields = ('id', 'name', 'healthcenter', 'latitude', 'longitude')
+        fields = ('id', 'name', 'phone', 'healthcenter',
+                  'latitude', 'longitude')
 
 
 class MidwifeViewSet(viewsets.ModelViewSet):
