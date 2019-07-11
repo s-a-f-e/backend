@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from rest_framework import routers
-from people.api import DriverViewSet, MotherViewSet, VillagesViewSet, HealthCentersViewSet
+from people.api import DriverViewSet, MotherViewSet, VillagesViewSet, HealthCentersViewSet, MidwifeViewSet
 
 from rest_framework.authtoken import views
 from django.views.generic import TemplateView
@@ -26,6 +26,7 @@ from . import view
 router = routers.DefaultRouter()
 router.register('drivers', DriverViewSet)
 router.register('mothers', MotherViewSet)
+router.register('midwives', MidwifeViewSet)
 router.register('villages', VillagesViewSet)
 router.register('healthcenters', HealthCentersViewSet)
 
