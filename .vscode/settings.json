@@ -1,11 +1,7 @@
 {
   "workbench.colorCustomizations": {
     "terminal.foreground": "#00FD61",
-    "terminal.background": "#030303",
-    "titleBar.activeBackground": "#832561",
-    "titleBar.inactiveBackground": "#83256199",
-    "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.inactiveForeground": "#e7e7e799"
+    "terminal.background": "#030303"
   },
   "python.pythonPath": "/Users/tgreenhalgh/.local/share/virtualenvs/backend-WV56_Fmv/bin/python"
 }
