@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Driver, Mother, Village, HealthCenter, Midwife
+from .models import Driver, Mother, Village, HealthCenter, Midwife, MotherDriverConnection
 from django.http import HttpResponse
 import csv
 
@@ -74,4 +74,5 @@ admin.site.register(Mother, PersonAdmin)
 admin.site.register(Driver, PersonAdmin)
 admin.site.register(Midwife, PersonAdmin)
 admin.site.register(Village, VillageAdmin)
+admin.site.register(MotherDriverConnection)
 admin.site.register(HealthCenter, HealthCenterAdmin)

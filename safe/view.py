@@ -1,5 +1,6 @@
-from people.models import Village, Mother, Driver, HealthCenter
+from people.models import Village, Mother, Driver, HealthCenter, MotherDriverConnection
 from django.http import JsonResponse, Http404
+from django.core import serializers
 from decouple import config
 from .geokdbush.geokdbush import around, distance
 import requests
@@ -65,7 +66,6 @@ def mother(request, id):
             return item[2]
 
         closestList = sorted(driversList, key=getKey)
-        # print("DONE", closestList)
 
         data = {
             'name': v_obj.name,
@@ -85,13 +85,14 @@ def mother(request, id):
         r = requests.post(url, data=json.dumps(payload))
         return JsonResponse({"data": register_msg})
         # raise Http404("Mother does not exist")
+    print("MOTHER phone number", v_obj.phone)
+    # Populate many-to-many table (MotherDriverConnection)
+    MotherDriverConnection.objects.create(motherPhoneNumber=v_obj.phone, motherName=v_obj.name, motherVillage=v_obj.village, driverPhoneNumber=closestList[0][1], driverIsComing=False)
 
     # ping the SMS server with closest driver
     url = 'https://cloud.frontlinesms.com/api/1/webhook'
-    pickup_msg = "Please pick up " + \
-        data["name"] + " at " + data["village"] + \
-        " village. Her number is " + \
-        data["phone"] + "\nPlease text her to let her know you are on the way."
+    pickup_msg = "Can you pick up a mother at "+ data["village"] + " village. " \
+        "\nIf yes, reply with '1', if no, reply with '2'."
     payload = {"apiKey": FRONTLINE_KEY, "payload": {"message": pickup_msg,
                                                     "recipients": [{"type": "mobile", "value": closestList[0][1]}]}}
     r = requests.post(url, data=json.dumps(payload))
@@ -138,3 +139,37 @@ def regMother(request, id):
     r = requests.post(url, data=json.dumps(payload))
 
     return JsonResponse(momObject)
+
+def driverOnOffDuty(request, id, onDutyFlag):
+    try:
+        m_obj = MotherDriverConnection.objects.filter(driverPhoneNumber=id).values()
+        json_res = []
+        for key in m_obj:
+            m_json = dict(key)
+            json_res.append(m_json)
+
+        if onDutyFlag == 1:
+            Driver.objects.filter(phone=id).update(available = False)
+            # build YES url to
+            url = 'https://cloud.frontlinesms.com/api/1/webhook'
+            pickup_msg = "Please pick up " + \
+                json_res[0]["motherName"] + " at " + json_res[0]["motherVillage"] + \
+                " village. Her number is " + \
+                json_res[0]["motherPhoneNumber"] + "\nPlease text her to let her know you are on the way."
+            payload = {"apiKey": FRONTLINE_KEY, "payload": {"message": pickup_msg,
+                                                    "recipients": [{"type": "mobile", "value": json_res[0]["driverPhoneNumber"]}]}}
+            r = requests.post(url, data=json.dumps(payload))
+            # delete connection
+            MotherDriverConnection.objects.filter(driverPhoneNumber=id).delete()
+
+        if onDutyFlag == 2:
+            flag = False
+            Driver.objects.filter(phone=id).update(available = flag)
+            # delete this connection
+            MotherDriverConnection.objects.filter(driverPhoneNumber=id).delete()
+            # API call here to get next driver/make new connection
+            mother(request, json_res[0]["motherPhoneNumber"])
+
+    except Driver.DoesNotExist:
+        raise Http404("Driver does not exist")
+    return JsonResponse({"Driver":"Successfully updated"})

@@ -47,3 +47,10 @@ class HealthCenter(models.Model):
     name = models.CharField(max_length=50, blank=False)
     longitude = models.FloatField()
     latitude = models.FloatField()
+
+class MotherDriverConnection(models.Model):
+    motherPhoneNumber = models.CharField(max_length=20)
+    motherName = models.CharField(max_length=50)
+    motherVillage = models.CharField(max_length=50)
+    driverPhoneNumber = models.CharField(max_length=20)
+    driverIsComing = models.BooleanField()
