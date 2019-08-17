@@ -49,6 +49,8 @@ class HealthCenter(models.Model):
     latitude = models.FloatField()
 
 class MotherDriverConnection(models.Model):
-    mother = models.ForeignKey(Mother, on_delete = models.CASCADE)
-    driver = models.ForeignKey(Driver, on_delete = models.CASCADE)
+    motherPhoneNumber = models.CharField(max_length=20)
+    motherName = models.CharField(max_length=50)
+    motherVillage = models.CharField(max_length=50)
+    driverPhoneNumber = models.CharField(max_length=20)
     driverIsComing = models.BooleanField()

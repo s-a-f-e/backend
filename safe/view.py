@@ -1,5 +1,6 @@
-from people.models import Village, Mother, Driver, HealthCenter
+from people.models import Village, Mother, Driver, HealthCenter, MotherDriverConnection
 from django.http import JsonResponse, Http404
+from django.core import serializers
 from decouple import config
 from .geokdbush.geokdbush import around, distance
 import requests
@@ -86,9 +87,12 @@ def mother(request, id):
         return JsonResponse({"data": register_msg})
         # raise Http404("Mother does not exist")
 
+    # Populate many-to-many table (MotherDriverConnection)
+    MotherDriverConnection.objects.create(motherPhoneNumber=v_obj.phone, motherName=v_obj.name, motherVillage=v_obj.village, driverPhoneNumber=closestList[0][1], driverIsComing=False)
+
     # ping the SMS server with closest driver
     url = 'https://cloud.frontlinesms.com/api/1/webhook'
-    pickup_msg = "Please pick up " + \
+    pickup_msg = "Please accept/decline " + \
         data["name"] + " at " + data["village"] + \
         " village. Her number is " + \
         data["phone"] + "\nPlease text her to let her know you are on the way."
@@ -141,10 +145,34 @@ def regMother(request, id):
 
 def driverOnOffDuty(request, id, onDutyFlag):
     try:
-        flag = True
+        m_obj = MotherDriverConnection.objects.filter(driverPhoneNumber=id).values()
+        json_res = []
+        for key in m_obj:
+            m_json = dict(key)
+            json_res.append(m_json)
+        print("OBJ", json_res[0])
+
+        if onDutyFlag == 1:
+            Driver.objects.filter(phone=id).update(available = False)
+            # build YES url to
+            url = 'https://cloud.frontlinesms.com/api/1/webhook'
+            pickup_msg = "Please pick up " + \
+                json_res[0]["motherName"] + " at " + json_res[0]["motherVillage"] + \
+                " village. Her number is " + \
+                json_res[0]["motherPhoneNumber"] + "\nPlease text her to let her know you are on the way."
+            payload = {"apiKey": FRONTLINE_KEY, "payload": {"message": pickup_msg,
+                                                    "recipients": [{"type": "mobile", "value": json_res[0]["driverPhoneNumber"]}]}}
+            r = requests.post(url, data=json.dumps(payload))
+            # delete connection
+            MotherDriverConnection.objects.filter(driverPhoneNumber=id).delete()
+
         if onDutyFlag == 2:
             flag = False
-        Driver.objects.filter(phone=id).update(available = flag)
+            Driver.objects.filter(phone=id).update(available = flag)
+            # API call here to get next driver
+            # go to next driver
+            mother(request, json_res[0]["motherPhoneNumber"])
+
     except Driver.DoesNotExist:
         raise Http404("Driver does not exist")
     return JsonResponse({"Driver":"Successfully updated"})
