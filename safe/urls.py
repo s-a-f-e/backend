@@ -37,6 +37,7 @@ urlpatterns = [
     path('api/village/<int:id>/', view.village),
     path('api/healthcenter/<int:id>/', view.healthcenter),
     path('api/mother/<str:id>/', view.mother),
+    path('api/toggledriveroff/<str:id>/<int:onDutyFlag>/', view.driverOnOffDuty),
     path('api/registermother/<str:id>/', view.regMother),
     path('', TemplateView.as_view(template_name="index.html")),
 ]

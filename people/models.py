@@ -47,3 +47,8 @@ class HealthCenter(models.Model):
     name = models.CharField(max_length=50, blank=False)
     longitude = models.FloatField()
     latitude = models.FloatField()
+
+class MotherDriverConnection(models.Model):
+    mother = models.ForeignKey(Mother, on_delete = models.CASCADE)
+    driver = models.ForeignKey(Driver, on_delete = models.CASCADE)
+    driverIsComing = models.BooleanField()

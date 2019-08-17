@@ -138,3 +138,13 @@ def regMother(request, id):
     r = requests.post(url, data=json.dumps(payload))
 
     return JsonResponse(momObject)
+
+def driverOnOffDuty(request, id, onDutyFlag):
+    try:
+        flag = True
+        if onDutyFlag == 2:
+            flag = False
+        Driver.objects.filter(phone=id).update(available = flag)
+    except Driver.DoesNotExist:
+        raise Http404("Driver does not exist")
+    return JsonResponse({"Driver":"Successfully updated"})
