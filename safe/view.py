@@ -161,6 +161,7 @@ def driverOnOffDuty(request, id, onDutyFlag):
             r = requests.post(url, data=json.dumps(payload))
             # delete connection
             MotherDriverConnection.objects.filter(driverPhoneNumber=id).delete()
+            return JsonResponse({"data": pickup_msg})
 
         if onDutyFlag == 2:
             flag = False
@@ -173,3 +174,28 @@ def driverOnOffDuty(request, id, onDutyFlag):
     except Driver.DoesNotExist:
         raise Http404("Driver does not exist")
     return JsonResponse({"Driver":"Successfully updated"})
+
+
+def driverOnline(request, id, onlineFlag):
+    try:
+        if onlineFlag == "online":
+            Driver.objects.filter(phone=id).update(available = True)
+            # build online url
+            url = 'https://cloud.frontlinesms.com/api/1/webhook'
+            online_msg = "You are now online. Reply with 'offline' to go offline."
+            payload = {"apiKey": FRONTLINE_KEY, "payload": {"message": online_msg,
+                                                    "recipients": [{"type": "mobile", "value": id}]}}
+            r = requests.post(url, data=json.dumps(payload))
+            return JsonResponse({"data": online_msg})
+        if onlineFlag == "offline":
+            Driver.objects.filter(phone=id).update(available = False)
+            #  build offline url
+            url = 'https://cloud.frontlinesms.com/api/1/webhook'
+            online_msg = "You are now offline. Reply with 'online' to go online."
+            payload = {"apiKey": FRONTLINE_KEY, "payload": {"message": online_msg,
+                                                    "recipients": [{"type": "mobile", "value": id}]}}
+            r = requests.post(url, data=json.dumps(payload))
+            return JsonResponse({"data": online_msg})
+    except Driver.DoesNotExist:
+        raise Http404("Driver does not exist")
+        
